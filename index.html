@@ -1,0 +1,110 @@
+---
+layout: default_1
+---
+
+ <body>
+ 
+ <header class="site-header">
+
+  <div class="wrapper">
+  <h2  class="site-title"> <a href="/">Luotaotao</a></h2>
+      <div class="trigger">          
+          <a class="page-link" href="/about?id=music">About</a>
+        <!--  <a class="page-link" href="/about/">Timeline</a>  -->    
+      </div>
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+      
+      
+      <div class="add_col1" id="mcol1">
+           <h3><a class="hh4" href="#">文章归档</a></h3>
+          
+            <ul class="ul_col1" id="ca-date">
+         {% for category in site.categories %}
+            <li class="{{ category | first | capitalize }}"><a href="/category/index.html?cat={{ category | first | capitalize }}"             >{{ category | first | capitalize }}</a><span>({{ category | last | size }})</span>                       
+            </li>                   
+         {% endfor %}    
+            </ul>
+            
+            
+          <h3><a class="hh4" href="#">文章分类</a></h3>
+            <ul class="ul_col1" id="ca-more">
+                         
+             {% for tag in site.tags %}
+            <li class="cla"> <a href="/category/index.html?cat={{ tag | first | capitalize | downcase }}"> {{ tag | first | capitalize }}</a> <span>({{ tag | last | size }})</span></li>                 
+             {% endfor %}      
+                            
+            </ul>             
+            
+      </div>
+      
+        <div class="home" id="mhome" >
+
+  <h1 class="page-heading">Blogs</h1>
+<!--
+  <ul class="post-list">
+    
+      <li>
+        <span class="post-meta">Aug 16, 2016</span>
+
+        <h2>
+          <a class="post-link" href="/jekyll/update/2016/08/16/welcome-to-jekyll.html">Welcome to Jekyll!</a>
+        </h2>
+      </li>
+    
+  </ul>-->
+<ul class="post-list">
+    {% for post in paginator.posts %}
+      <li>
+        <h2>
+          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+          <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+        </h2>
+           <p>{{post.excerpt}}</p>
+      </li>
+    {% endfor %}
+  </ul>
+    <!-- 分页 -->
+        {% if paginator.total_pages > 1 %}
+        <div class="pages">
+          {% if paginator.previous_page %}
+          {% if paginator.previous_page == 1 %}
+          <a href="{{ '/index.html' | prepend: site.baseurl | replace: '//', '/' }}">上一页</a>
+          {% else %}
+          <a href="/page{{ paginator.previous_page }}" class="previous">上一页</a>
+          {% endif %}
+
+          {% endif %}
+
+          {% for page in (1..paginator.total_pages) %}
+          {% if page == paginator.page %}
+          <span class="page_number ">{{ paginator.page }}</span>
+          {% elsif page == 1 %}
+          <a href="{{ '/index.html' | prepend: site.baseurl | replace: '//', '/' }}">{{ page }}</a>
+          {% else %}
+          <a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a>
+          {% endif %}
+          {% endfor %}
+
+          {% if paginator.next_page %}
+          <a href="/page{{ paginator.next_page }}" class="next">下一页</a>
+          {% endif %}
+        </div>
+        {% endif %}
+                            
+</div>
+
+
+
+      </div>
+    </div>
+{% include footer.html %}
+ 
+  </body>
+
+

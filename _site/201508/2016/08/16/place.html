@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>lxtblog</title>
+  <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+">
+<!-- <link rel="stylesheet" href="/css/main.css">-->
+<!--  <link rel="canonical" href="http://yourdomain.com/">
+<link rel="alternate" type="application/rss+xml" title="Your awesome title" href="http://yourdomain.com/feed.xml">-->
+<link rel="canonical" href="http://yourdomain.com/201508/2016/08/16/place.html">
+<link rel="stylesheet" href="/css/main_try.css">
+<script type="text/javascript" src="/jquery/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript">	
+//	var mhome = document.getElementById('mhome');
+//      mhome.style.display = 'none';
+//      mhome.style.width = '100%';
+	
+//	var mcol1  = document.getElementById('mcol1');
+//	mcol1.style.display = 'none';	
+
+//    var mhome_diary = document.getElementById('mhome_diary');
+//      mhome_diary.style.display = 'block';
+
+    $(document).ready(function(){  
+	
+	    var para = getUrlParam("cat");
+		
+	    $("."+para).css("display" , "block");
+	  
+/*function trysort () {	
+var descElements = $('#ca-date > li').get().sort(function(first, second){
+var f = $('li', first).text(); //first =
+var s = $('li', second).text();
+return f > s ? -1 : 1;
+});
+};
+
+trysort();
+$(descElements).appendTo('#ca-date');
+ */
+ 
+ 
+ $(function(){
+var descElements = $('#ca-date > li').get().sort(function(first, second){
+var f =  parseInt( $(first).attr("class")); //first =
+var s =  parseInt( $(second).attr("class"));
+return s - f;
+//return f > s ? -1 : 1;
+});
+$(descElements).appendTo('#ca-date');
+})
+
+
+
+$("#ca-date>li").each(function(){  
+
+   var year = $(this).attr("class").substr(0,4);
+    
+	   if ( $(this).attr("class").substr(4,1) == 0){
+		   
+		      var mon = $(this).attr("class").substr(5,1);
+		   
+	   }else{
+		   
+		      var mon = $(this).attr("class").substr(4,2);
+	   }
+   
+     $(this).find("a").text(year+"年"+mon+"月");
+ 
+});
+
+
+
+
+$(".page2-heading").each(function(){  
+
+   var year = $(this).text().substr(0,4);
+    
+	   if ( $(this).text().substr(4,1) == 0){
+		   
+		      var mon = $(this).text().substr(5,1);
+		   
+	   }else{
+		   
+		      var mon = $(this).text().substr(4,2);
+	   }
+   
+     $(this).text(year+"年"+mon+"月");
+ 
+});
+
+
+
+
+function getUrlParam(name){  
+    //构造一个含有目标参数的正则表达式对象  
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");  
+    //匹配目标参数  
+    var r = window.location.search.substr(1).match(reg);  
+    //返回参数值  
+    if (r!=null) return unescape(r[2]);  
+    return null;  
+}  
+	}
+);
+</script>
+</head>
+ <body>
+ 
+ <header class="site-header">
+
+  <div class="wrapper">
+  <h2  class="site-title"> <a href="/">Luotaotao</a></h2>
+      <div class="trigger">          
+          <a class="page-link" href="/about/">About</a>
+        <!--  <a class="page-link" href="/about/">Timeline</a>  -->    
+      </div>
+  </div>
+
+</header>
+
+
+    <div class="page2-content">
+      <div class="wrapper">
+          
+        <div class="home_post">
+      
+              <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+                 <header class="post-header">
+                 <h1 class="post-title" itemprop="name headline">place tips</h1>
+                <!-- <p class="post-meta"><time datetime="2016-08-16T16:01:49+08:00" itemprop="datePublished">Aug 16, 2016</time></p>-->
+                 </header>
+
+            <div class="post-content" itemprop="articleBody">
+               <p>绝对定位和相对定位，对块级元素进行布局</p>
+
+<p>块级元素进行相对定位时：position：relative 该属性值的设置，元素没有脱离文档流，还是普通流定位模型的一部分，会对文档流中其它元素布局产生影响。<br />
+设置top bottom left right的值进行定位，除去块级元素相对移动位置外，占位空间依然存在，不影响其他块级元素的位置。配合z-index属性使用可以解决垂直方向上显示覆盖的问题。
+z-index的值越高越显示在最上层。
+如设置margin来进行相对定位，会影响文档流中的其他元素位置。</p>
+
+<p>父容器使用相对定位，子元素使用绝对定位后，这样子元素的位置不再相对于浏览器左上角，而是相对于父窗口左上角</p>
+
+<p>相对定位和绝对定位需要配合top、right、bottom、left使用来定位具体位置，这四个属性只有在该元素使用定位后才生效，
+其它情况下无效。另外这四个属性同时只能使用相邻的两个，不能即使用上又使用下，或即使用左，又使用右。</p>
+
+<p>采用外层div position：relative，内层div position：absolute的方法，需要注意外层的div需要设置height的具体值而不能采用设置百分比的方法，
+否则内层的div无法撑开外层div。</p>
+
+<p>position:fixed 生成绝对定位的元素，相对于浏览器窗口进行定位。元素的位置通过 “left”, “top”, “right” 以及 “bottom” 属性进行规定。</p>
+
+<p>position:static 默认值。没有定位，元素出现在正常的流中（忽略 top, bottom, left, right 或者 z-index 声明）。</p>
+
+<p>position:inherit  规定应该从父元素继承 position 属性的值。</p>
+
+            </div>           
+           </article>
+		   
+      </div>
+    </div>
+</div>	
+<footer class="site-footer">
+   <div class="wrapper">
+     <div class="footer-col-wrapper">
+    
+      <div class="footer-col-1">
+        <ul class="contact-list">
+          <li>github site</li>
+          <li><a href="https://github.com/luotaotao.github.io">luotaotao.github.io</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/jekyll"><span class="jekyll--github">
+</span><span class="username">jekyll</span></a>
+          </li>
+          <li><a href="https://github.com"><span class="icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span></a></li> 
+		</ul>
+      </div>
+
+      <div class="footer-col-3">
+        <p><b>Site powered by Jekyll & Github Pages. Theme designed by Luotaotao</b></p>
+      </div>
+    </div>
+  </div>
+</footer>
+ 
+  </body>
+
+
+
+
+
+ </html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>lxtblog</title>
+  <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+">
+<!-- <link rel="stylesheet" href="/css/main.css">-->
+<!--  <link rel="canonical" href="http://yourdomain.com/">
+<link rel="alternate" type="application/rss+xml" title="Your awesome title" href="http://yourdomain.com/feed.xml">-->
+<link rel="canonical" href="http://yourdomain.com/201608/2016/08/29/plsql.html">
+<link rel="stylesheet" href="/css/main_try.css">
+<script type="text/javascript" src="/jquery/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript">	
+//	var mhome = document.getElementById('mhome');
+//      mhome.style.display = 'none';
+//      mhome.style.width = '100%';
+	
+//	var mcol1  = document.getElementById('mcol1');
+//	mcol1.style.display = 'none';	
+
+//    var mhome_diary = document.getElementById('mhome_diary');
+//      mhome_diary.style.display = 'block';
+
+    $(document).ready(function(){  
+	
+	    var para = getUrlParam("cat");
+		
+	    $("."+para).css("display" , "block");
+	  
+/*function trysort () {	
+var descElements = $('#ca-date > li').get().sort(function(first, second){
+var f = $('li', first).text(); //first =
+var s = $('li', second).text();
+return f > s ? -1 : 1;
+});
+};
+
+trysort();
+$(descElements).appendTo('#ca-date');
+ */
+ 
+ 
+ $(function(){
+var descElements = $('#ca-date > li').get().sort(function(first, second){
+var f =  parseInt( $(first).attr("class")); //first =
+var s =  parseInt( $(second).attr("class"));
+return s - f;
+//return f > s ? -1 : 1;
+});
+$(descElements).appendTo('#ca-date');
+})
+
+
+
+$("#ca-date>li").each(function(){  
+
+   var year = $(this).attr("class").substr(0,4);
+    
+	   if ( $(this).attr("class").substr(4,1) == 0){
+		   
+		      var mon = $(this).attr("class").substr(5,1);
+		   
+	   }else{
+		   
+		      var mon = $(this).attr("class").substr(4,2);
+	   }
+   
+     $(this).find("a").text(year+"年"+mon+"月");
+ 
+});
+
+
+
+
+$(".page2-heading").each(function(){  
+
+   var year = $(this).text().substr(0,4);
+    
+	   if ( $(this).text().substr(4,1) == 0){
+		   
+		      var mon = $(this).text().substr(5,1);
+		   
+	   }else{
+		   
+		      var mon = $(this).text().substr(4,2);
+	   }
+   
+     $(this).text(year+"年"+mon+"月");
+ 
+});
+
+
+
+
+function getUrlParam(name){  
+    //构造一个含有目标参数的正则表达式对象  
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");  
+    //匹配目标参数  
+    var r = window.location.search.substr(1).match(reg);  
+    //返回参数值  
+    if (r!=null) return unescape(r[2]);  
+    return null;  
+}  
+	}
+);
+</script>
+</head>
+ <body>
+ 
+ <header class="site-header">
+
+  <div class="wrapper">
+  <h2  class="site-title"> <a href="/">Luotaotao</a></h2>
+      <div class="trigger">          
+          <a class="page-link" href="/about/">About</a>
+        <!--  <a class="page-link" href="/about/">Timeline</a>  -->    
+      </div>
+  </div>
+
+</header>
+
+
+    <div class="page2-content">
+      <div class="wrapper">
+          
+        <div class="home_post">
+      
+              <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+                 <header class="post-header">
+                 <h1 class="post-title" itemprop="name headline">PL/SQL 相关问题总结</h1>
+                <!-- <p class="post-meta"><time datetime="2016-08-29T16:01:49+08:00" itemprop="datePublished">Aug 29, 2016</time></p>-->
+                 </header>
+
+            <div class="post-content" itemprop="articleBody">
+               <p>解决pl/sql Developer的中文字符集问题，pl/sql的TNS配置</p>
+
+<p>pl/sql Developer 使用过程中where查询条件后出现中文时，匹配不到相应的查询结果。即中文字符查询失效，解决方法如下：
+更改环境变量 NLS_LANG=SIMPLIFIED CHINESE_CHINA.ZHS16GBK</p>
+
+<p>1.登录PL/SQL Developer
+这里省略Oracle数据库和PL/SQL Developer的安装步骤，注意在安装PL/SQL Developer软件时，不要安装在Program Files (x86)目录下，不然无法启动PL/SQL Developer。
+奇怪这里为什么选择不到数据库的TNS呢？我是先安装数据库，再安装PL/SQL  Developer。按理说安装PL/SQL Developer时，就已经识别到了Oracle Home和OCI Libaray了。管它呢？先以非登录方式登录PL/SQL Developer，设置Oracle Home和OCI Libaray。
+在Oracle Home这选项下，没有自动识别到Oracle Home目录，于是手动指定Oracle Home路径。
+点击“确定”，退出PL/SQL Developer，再次登录。
+还是选择不到数据库TNS，尝试无数据库登录，看看报什么错误。
+终于找到问题的关键点了，安装的PL/SQL Deleloper只能识别32的oci.dll。看来是要安个64位的PL/SQL Deleloper，于是在网上搜索PL/SQL Deleloper 64位版本。然而发现PL/SQL Deleloper不区分64位和32位。那看来只能从oci.dll入手了。根据上面的报错信息来看，似乎只要安装一个32位版本的Oracle Client。</p>
+
+<p>2.安装oracle Clinet
+首先到Oracle官网上去下载一个Oracle 11g Client，不过需要先申请一个Oracle 帐号，才能下载。
+目前下载地址：http://www.oracle.com/technetwork/database/features/instant-client/index-097480.html
+这个一个绿色版的Oracle Client，因此只要需要解压了，就可以是。将下载的Oracle Client文件instantclient-basic-win32-11.2.0.1.0.zip解压到C盘（注意啦！不能下64位的）。然后在解压后的C:\instantclient_11_2目录下新建NETWORK\ADMIN目录，在ADMIN目录下新建tnsnames.ora文件，添加数据库TNS。
+ORCL =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = chiclewu-PC)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = orcl)
+    )
+  )
+（注意：tnsnames.ora文件也可以从Oracle数据库HOME目录的NETWORK\ADMIN目录，还要把sqlnet.ora拷贝过来。然后确定HOST配置是否正确，如果HOST是主机名，需要把主机名后面的域名去掉）</p>
+
+<p>3.配置PL/SQL Developer的Oracle Home和OCI Libaray
+以非登录模式进入PL/SQL Developer，将Oracle Home路径指定为Oracle Client目录（C:\instantclient_11_2），OCI Libaray路径为Oracle Client目录的oci.dll(C:\instantclient_11_2\oci.dll)。
+点击“确定”，现在配置已完成，下面就是等待奇迹的时刻。退出PL/SQL Developer。</p>
+
+<p>4.验证Oracle Client
+打开新的PL/SQL Developer，输入用户名和密码，在database选项下，可以看刚才配置的TNS了。</p>
+
+
+            </div>           
+           </article>
+		   
+      </div>
+    </div>
+</div>	
+<footer class="site-footer">
+   <div class="wrapper">
+     <div class="footer-col-wrapper">
+    
+      <div class="footer-col-1">
+        <ul class="contact-list">
+          <li>github site</li>
+          <li><a href="https://github.com/luotaotao.github.io">luotaotao.github.io</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/jekyll"><span class="jekyll--github">
+</span><span class="username">jekyll</span></a>
+          </li>
+          <li><a href="https://github.com"><span class="icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span></a></li> 
+		</ul>
+      </div>
+
+      <div class="footer-col-3">
+        <p><b>Site powered by Jekyll & Github Pages. Theme designed by Luotaotao</b></p>
+      </div>
+    </div>
+  </div>
+</footer>
+ 
+  </body>
+
+
+
+
+
+ </html>

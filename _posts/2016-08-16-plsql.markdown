@@ -1,0 +1,48 @@
+---
+layout: post
+title:  "PL/SQL 相关问题总结"
+date:   2016-08-29 16:01:49 +0800
+category: 201608
+tags: operation
+---
+解决pl/sql Developer的中文字符集问题，pl/sql的TNS配置   
+
+pl/sql Developer 使用过程中where查询条件后出现中文时，匹配不到相应的查询结果。即中文字符查询失效，解决方法如下：
+更改环境变量 NLS_LANG=SIMPLIFIED CHINESE_CHINA.ZHS16GBK
+
+1.登录PL/SQL Developer
+这里省略Oracle数据库和PL/SQL Developer的安装步骤，注意在安装PL/SQL Developer软件时，不要安装在Program Files (x86)目录下，不然无法启动PL/SQL Developer。
+奇怪这里为什么选择不到数据库的TNS呢？我是先安装数据库，再安装PL/SQL  Developer。按理说安装PL/SQL Developer时，就已经识别到了Oracle Home和OCI Libaray了。管它呢？先以非登录方式登录PL/SQL Developer，设置Oracle Home和OCI Libaray。
+在Oracle Home这选项下，没有自动识别到Oracle Home目录，于是手动指定Oracle Home路径。
+点击“确定”，退出PL/SQL Developer，再次登录。
+还是选择不到数据库TNS，尝试无数据库登录，看看报什么错误。
+终于找到问题的关键点了，安装的PL/SQL Deleloper只能识别32的oci.dll。看来是要安个64位的PL/SQL Deleloper，于是在网上搜索PL/SQL Deleloper 64位版本。然而发现PL/SQL Deleloper不区分64位和32位。那看来只能从oci.dll入手了。根据上面的报错信息来看，似乎只要安装一个32位版本的Oracle Client。
+
+ 
+2.安装oracle Clinet
+首先到Oracle官网上去下载一个Oracle 11g Client，不过需要先申请一个Oracle 帐号，才能下载。
+目前下载地址：http://www.oracle.com/technetwork/database/features/instant-client/index-097480.html
+这个一个绿色版的Oracle Client，因此只要需要解压了，就可以是。将下载的Oracle Client文件instantclient-basic-win32-11.2.0.1.0.zip解压到C盘（注意啦！不能下64位的）。然后在解压后的C:\instantclient_11_2目录下新建NETWORK\ADMIN目录，在ADMIN目录下新建tnsnames.ora文件，添加数据库TNS。
+ORCL =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = chiclewu-PC)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = orcl)
+    )
+  )
+（注意：tnsnames.ora文件也可以从Oracle数据库HOME目录的NETWORK\ADMIN目录，还要把sqlnet.ora拷贝过来。然后确定HOST配置是否正确，如果HOST是主机名，需要把主机名后面的域名去掉）
+
+ 
+
+3.配置PL/SQL Developer的Oracle Home和OCI Libaray
+以非登录模式进入PL/SQL Developer，将Oracle Home路径指定为Oracle Client目录（C:\instantclient_11_2），OCI Libaray路径为Oracle Client目录的oci.dll(C:\instantclient_11_2\oci.dll)。
+点击“确定”，现在配置已完成，下面就是等待奇迹的时刻。退出PL/SQL Developer。
+ 
+ 
+4.验证Oracle Client
+打开新的PL/SQL Developer，输入用户名和密码，在database选项下，可以看刚才配置的TNS了。
+
+ 
+
+

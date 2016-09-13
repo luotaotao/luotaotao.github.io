@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>lxtblog</title>
+  <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+">
+<!-- <link rel="stylesheet" href="/css/main.css">-->
+<!--  <link rel="canonical" href="http://yourdomain.com/">
+<link rel="alternate" type="application/rss+xml" title="Your awesome title" href="http://yourdomain.com/feed.xml">-->
+<link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+<link rel="stylesheet" href="{{ "/css/main_try.css" | prepend: site.baseurl }}">
+<script type="text/javascript" src="{{"/jquery/jquery-1.12.4.min.js" | prepend: site.baseurl}}" ></script>
+<script type="text/javascript">	
+//	var mhome = document.getElementById('mhome');
+//      mhome.style.display = 'none';
+//      mhome.style.width = '100%';
+	
+//	var mcol1  = document.getElementById('mcol1');
+//	mcol1.style.display = 'none';	
+
+//    var mhome_diary = document.getElementById('mhome_diary');
+//      mhome_diary.style.display = 'block';
+
+    $(document).ready(function(){  
+	
+	    var para = getUrlParam("cat");
+		
+	    $("."+para).css("display" , "block");
+	  
+/*function trysort () {	
+var descElements = $('#ca-date > li').get().sort(function(first, second){
+var f = $('li', first).text(); //first =
+var s = $('li', second).text();
+return f > s ? -1 : 1;
+});
+};
+
+trysort();
+$(descElements).appendTo('#ca-date');
+ */
+ 
+ 
+ $(function(){
+var descElements = $('#ca-date > li').get().sort(function(first, second){
+var f =  parseInt( $(first).attr("class")); //first =
+var s =  parseInt( $(second).attr("class"));
+return s - f;
+//return f > s ? -1 : 1;
+});
+$(descElements).appendTo('#ca-date');
+})
+
+
+
+$("#ca-date>li").each(function(){  
+
+   var year = $(this).attr("class").substr(0,4);
+    
+	   if ( $(this).attr("class").substr(4,1) == 0){
+		   
+		      var mon = $(this).attr("class").substr(5,1);
+		   
+	   }else{
+		   
+		      var mon = $(this).attr("class").substr(4,2);
+	   }
+   
+     $(this).find("a").text(year+"年"+mon+"月");
+ 
+});
+
+
+
+
+$(".page2-heading").each(function(){  
+
+   var year = $(this).text().substr(0,4);
+    
+	   if ( $(this).text().substr(4,1) == 0){
+		   
+		      var mon = $(this).text().substr(5,1);
+		   
+	   }else{
+		   
+		      var mon = $(this).text().substr(4,2);
+	   }
+   
+     $(this).text(year+"年"+mon+"月");
+ 
+});
+
+
+
+
+function getUrlParam(name){  
+    //构造一个含有目标参数的正则表达式对象  
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");  
+    //匹配目标参数  
+    var r = window.location.search.substr(1).match(reg);  
+    //返回参数值  
+    if (r!=null) return unescape(r[2]);  
+    return null;  
+}  
+	}
+);
+</script>
+</head>
+{{ content }}
+ </html>

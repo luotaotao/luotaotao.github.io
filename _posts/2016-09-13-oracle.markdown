@@ -1,0 +1,49 @@
+---
+layout: post
+title:  "oracle sql基础"
+date:   2016-09-12 16:01:49 +0800
+category: 201609
+tags: oracle
+---
+相关的建表语句，删除表清空表，sequence的创建和使用
+
+创建t1表
+
+	create table t1
+	(name char(8),
+	salary number(5) default 0,
+	Content char(4),
+	Hiredate date);
+
+查看数据库系统时间 select sysdate from dual;
+
+创建序列 create sequence
+
+	create sequence s4_try 
+	increment by 1
+	start with 3;
+	---------
+
+	select s1_try.nextval as ID from dual;
+
+	select lpad(s1_try.nextval , 5 ,'0' ) ID from dual;
+
+	select lpad(s1_try.currval , 5 , 0) ID from dual;
+	
+	--查看sequence属性
+	select * from user_sequences;
+	--删除sequence
+	drop sequence s2_try;
+	----重置sequence 起始值设置为1------------------
+	--execute 执行对象替换需要加上用户名？
+	select s1_try.currval from dual;
+
+	create or replace procedure seq_ret (sequence_name varchar2) as 
+	n number(10);
+	begin
+	execute immediate 'select scott.'||sequence_name||'.nextval from dual' into n;
+	n:= -(n-1);
+	execute immediate 'alter sequence  scott.'||sequence_name|| ' increment by '|| n;
+	execute immediate 'select scott.'||sequence_name||'.nextval from dual' into n;                                --未执行
+	execute immediate 'alter sequence scott.'||sequence_name||' increment by 1';
+	end;

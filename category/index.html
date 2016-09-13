@@ -1,0 +1,100 @@
+---
+layout: default_1
+---
+
+ <body>
+ 
+ <header class="site-header">
+
+  <div class="wrapper">
+  <h2  class="site-title"> <a href="/">Luotaotao</a></h2>
+      <div class="trigger">          
+          <a class="page-link" href="/about?id=music">About</a>
+        <!--  <a class="page-link" href="/about/">Timeline</a>  -->    
+      </div>
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+      
+      
+      <div class="add_col1" id="mcol1" >
+           <h3><a class="hh4" href="#">文章归档</a></h3>
+          
+            <ul class="ul_col1" id="ca-date">
+                     {% for category in site.categories %}
+                        <li class="{{ category | first | capitalize }}"><a href="/category/index.html?cat={{ category | first | capitalize }}">{{ category | first | capitalize }}</a><span>({{ category | last | size }})</span>
+                        </li>                   
+                     {% endfor %}             
+            </ul>
+            
+            
+          <h3><a class="hh4" href="#">文章分类</a></h3>
+            <ul class="ul_col1" id="ca-more">
+                {% for tag in site.tags %}
+                   <li class="cla"> <a href="/category/index.html?cat={{ tag | first | capitalize | downcase }}"> {{ tag | first | capitalize }}</a><span>({{ tag | last | size }})</span></li>                   
+                {% endfor %}
+                            
+            </ul> 
+            
+            
+      </div>
+      
+        <div class="home" id="mhome" >
+
+     <!--         <h1 class="page-heading">Blogs</h1>   -->
+                {% for tag in site.tags %}
+				
+				  <div class="{{tag | first | capitalize | downcase}}" style="display:none;">
+				
+			       <h1 class='page3-heading'>{{ tag | first | capitalize }}</h1>
+                   <ul class='post-list'>
+		              {% for post in tag.last  %}
+                             <li>
+							      <h2>
+							           <a class="post-link" target='_blank' href='{{ post.url }}'>{{ post.title }}</a>
+								       <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+								  </h2>
+							      {{post.excerpt}}
+							 </li>		                             
+                      {% endfor %}
+                  </ul>						
+		
+		          </div>
+				
+		       {% endfor %}
+                  
+          
+		       {% for category in site.categories %}
+				
+				  <div class="{{category | first | capitalize | downcase}}" style="display:none;">
+				
+			       <h1 class='page2-heading'>{{ category | first | capitalize }}</h1>
+                   <ul class='post-list'>
+		              {% for post in category.last  %}
+                             <li>
+							      <h2>
+							           <a class="post-link" target='_blank' href='{{ post.url }}'>{{ post.title }}</a>
+								       <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+								  </h2>
+							      {{post.excerpt}}
+							 </li>		                             
+                      {% endfor %}
+                  </ul>						
+		
+		          </div>
+				
+		       {% endfor %}
+		  		  
+         </div>
+
+
+
+      </div>
+    </div>
+{% include footer.html %}
+ 
+  </body>

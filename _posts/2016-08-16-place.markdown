@@ -1,0 +1,27 @@
+---
+layout: post
+title:  "place tips"
+date:   2016-08-16 16:01:49 +0800
+category: 201508
+tags: front
+---
+绝对定位和相对定位，对块级元素进行布局  
+
+块级元素进行相对定位时：position：relative 该属性值的设置，元素没有脱离文档流，还是普通流定位模型的一部分，会对文档流中其它元素布局产生影响。  
+设置top bottom left right的值进行定位，除去块级元素相对移动位置外，占位空间依然存在，不影响其他块级元素的位置。配合z-index属性使用可以解决垂直方向上显示覆盖的问题。
+z-index的值越高越显示在最上层。
+如设置margin来进行相对定位，会影响文档流中的其他元素位置。
+
+父容器使用相对定位，子元素使用绝对定位后，这样子元素的位置不再相对于浏览器左上角，而是相对于父窗口左上角
+
+相对定位和绝对定位需要配合top、right、bottom、left使用来定位具体位置，这四个属性只有在该元素使用定位后才生效，
+其它情况下无效。另外这四个属性同时只能使用相邻的两个，不能即使用上又使用下，或即使用左，又使用右。
+
+采用外层div position：relative，内层div position：absolute的方法，需要注意外层的div需要设置height的具体值而不能采用设置百分比的方法，
+否则内层的div无法撑开外层div。
+
+position:fixed 生成绝对定位的元素，相对于浏览器窗口进行定位。元素的位置通过 "left", "top", "right" 以及 "bottom" 属性进行规定。
+
+position:static 默认值。没有定位，元素出现在正常的流中（忽略 top, bottom, left, right 或者 z-index 声明）。
+
+position:inherit  规定应该从父元素继承 position 属性的值。

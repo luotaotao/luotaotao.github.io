@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Your awesome title aaaa</title>
+    <description>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+</description>
+    <link>http://yourdomain.com/</link>
+    <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Tue, 13 Sep 2016 10:58:24 +0800</pubDate>
+    <lastBuildDate>Tue, 13 Sep 2016 10:58:24 +0800</lastBuildDate>
+    <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>oracle sql基础</title>
+        <description>&lt;p&gt;相关的建表语句，删除表清空表，sequence的创建和使用&lt;/p&gt;
+
+&lt;p&gt;创建t1表&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;create table t1
+(name char(8),
+salary number(5) default 0,
+Content char(4),
+Hiredate date);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;查看数据库系统时间 select sysdate from dual;&lt;/p&gt;
+
+&lt;p&gt;创建序列 create sequence&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;create sequence s4_try 
+increment by 1
+start with 3;
+---------
+
+select s1_try.nextval as ID from dual;
+
+select lpad(s1_try.nextval , 5 ,&#39;0&#39; ) ID from dual;
+
+select lpad(s1_try.currval , 5 , 0) ID from dual;
+
+--查看sequence属性
+select * from user_sequences;
+--删除sequence
+drop sequence s2_try;
+----重置sequence 起始值设置为1------------------
+--execute 执行对象替换需要加上用户名？
+select s1_try.currval from dual;
+
+create or replace procedure seq_ret (sequence_name varchar2) as 
+n number(10);
+begin
+execute immediate &#39;select scott.&#39;||sequence_name||&#39;.nextval from dual&#39; into n;
+n:= -(n-1);
+execute immediate &#39;alter sequence  scott.&#39;||sequence_name|| &#39; increment by &#39;|| n;
+execute immediate &#39;select scott.&#39;||sequence_name||&#39;.nextval from dual&#39; into n;                                --未执行
+execute immediate &#39;alter sequence scott.&#39;||sequence_name||&#39; increment by 1&#39;;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Mon, 12 Sep 2016 16:01:49 +0800</pubDate>
+        <link>http://yourdomain.com/201609/2016/09/12/oracle.html</link>
+        <guid isPermaLink="true">http://yourdomain.com/201609/2016/09/12/oracle.html</guid>
+        
+        <category>oracle</category>
+        
+        
+        <category>201609</category>
+        
+      </item>
+    
+      <item>
+        <title>PL/SQL 相关问题总结</title>
+        <description>&lt;p&gt;解决pl/sql Developer的中文字符集问题，pl/sql的TNS配置&lt;/p&gt;
+
+&lt;p&gt;pl/sql Developer 使用过程中where查询条件后出现中文时，匹配不到相应的查询结果。即中文字符查询失效，解决方法如下：
+更改环境变量 NLS_LANG=SIMPLIFIED CHINESE_CHINA.ZHS16GBK&lt;/p&gt;
+
+&lt;p&gt;1.登录PL/SQL Developer
+这里省略Oracle数据库和PL/SQL Developer的安装步骤，注意在安装PL/SQL Developer软件时，不要安装在Program Files (x86)目录下，不然无法启动PL/SQL Developer。
+奇怪这里为什么选择不到数据库的TNS呢？我是先安装数据库，再安装PL/SQL  Developer。按理说安装PL/SQL Developer时，就已经识别到了Oracle Home和OCI Libaray了。管它呢？先以非登录方式登录PL/SQL Developer，设置Oracle Home和OCI Libaray。
+在Oracle Home这选项下，没有自动识别到Oracle Home目录，于是手动指定Oracle Home路径。
+点击“确定”，退出PL/SQL Developer，再次登录。
+还是选择不到数据库TNS，尝试无数据库登录，看看报什么错误。
+终于找到问题的关键点了，安装的PL/SQL Deleloper只能识别32的oci.dll。看来是要安个64位的PL/SQL Deleloper，于是在网上搜索PL/SQL Deleloper 64位版本。然而发现PL/SQL Deleloper不区分64位和32位。那看来只能从oci.dll入手了。根据上面的报错信息来看，似乎只要安装一个32位版本的Oracle Client。&lt;/p&gt;
+
+&lt;p&gt;2.安装oracle Clinet
+首先到Oracle官网上去下载一个Oracle 11g Client，不过需要先申请一个Oracle 帐号，才能下载。
+目前下载地址：http://www.oracle.com/technetwork/database/features/instant-client/index-097480.html
+这个一个绿色版的Oracle Client，因此只要需要解压了，就可以是。将下载的Oracle Client文件instantclient-basic-win32-11.2.0.1.0.zip解压到C盘（注意啦！不能下64位的）。然后在解压后的C:\instantclient_11_2目录下新建NETWORK\ADMIN目录，在ADMIN目录下新建tnsnames.ora文件，添加数据库TNS。
+ORCL =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = chiclewu-PC)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = orcl)
+    )
+  )
+（注意：tnsnames.ora文件也可以从Oracle数据库HOME目录的NETWORK\ADMIN目录，还要把sqlnet.ora拷贝过来。然后确定HOST配置是否正确，如果HOST是主机名，需要把主机名后面的域名去掉）&lt;/p&gt;
+
+&lt;p&gt;3.配置PL/SQL Developer的Oracle Home和OCI Libaray
+以非登录模式进入PL/SQL Developer，将Oracle Home路径指定为Oracle Client目录（C:\instantclient_11_2），OCI Libaray路径为Oracle Client目录的oci.dll(C:\instantclient_11_2\oci.dll)。
+点击“确定”，现在配置已完成，下面就是等待奇迹的时刻。退出PL/SQL Developer。&lt;/p&gt;
+
+&lt;p&gt;4.验证Oracle Client
+打开新的PL/SQL Developer，输入用户名和密码，在database选项下，可以看刚才配置的TNS了。&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 29 Aug 2016 16:01:49 +0800</pubDate>
+        <link>http://yourdomain.com/201608/2016/08/29/plsql.html</link>
+        <guid isPermaLink="true">http://yourdomain.com/201608/2016/08/29/plsql.html</guid>
+        
+        <category>operation</category>
+        
+        
+        <category>201608</category>
+        
+      </item>
+    
+      <item>
+        <title>css 浮动</title>
+        <description>&lt;p&gt;解决浮动元素父标签高度塌陷的问题
+浮动的框可以向左或向右移动，直到它的外边缘碰到包含框或另一个浮动框的边框为止。
+由于浮动框不在文档的普通流中，所以文档的普通流中的块框表现得就像浮动框不存在一样。&lt;/p&gt;
+
+&lt;p&gt;float 属性定义元素在哪个方向浮动。以往这个属性总应用于图像，使文本围绕在图像周围，不过在 CSS 中，任何元素都可以浮动。
+浮动元素会生成一个块级框，而不论它本身是何种元素。
+如果浮动非替换元素，则要指定一个明确的宽度；否则，它们会尽可能地窄。
+注释：假如在一行之上只有极少的空间可供浮动元素，那么这个元素会跳至下一行，这个过程会持续到某一行拥有足够的空间为止。&lt;/p&gt;
+
+&lt;p&gt;清除浮动的方法:&lt;br /&gt;
+1,父级div手动定义height，就解决了父级div无法自动获取到高度的问题。只适合高度固定的布局，要给出精确的高度，如果高度和父级div不一样时，会产生问题
+不推荐使用，只建议高度固定的布局时使用。&lt;br /&gt;
+2,添加一个空div，利用css提高的clear:both清除浮动，让父级div能自动获取到高度&lt;br /&gt;
+3,父级div定义 伪类:after 和 zoom ，IE8以上和非IE浏览器才支持:after，原理和方法2有点类似，zoom(IE转有属性)可解决ie6,ie7浮动问题。&lt;br /&gt;
+4,给浮动元素的容器添加overflow:hidden;或overflow:auto;可以清除浮动，另外在 IE6 中还需要触发 hasLayout ，例如为父元素设置容器宽高或设置 zoom:1。
+在添加overflow属性后，浮动元素又回到了容器层，把容器高度撑起，达到了清理浮动的效果。&lt;/p&gt;
+</description>
+        <pubDate>Thu, 18 Aug 2016 09:01:49 +0800</pubDate>
+        <link>http://yourdomain.com/201608/2016/08/18/css-float.html</link>
+        <guid isPermaLink="true">http://yourdomain.com/201608/2016/08/18/css-float.html</guid>
+        
+        <category>front</category>
+        
+        
+        <category>201608</category>
+        
+      </item>
+    
+      <item>
+        <title>C大七和弦</title>
+        <description>&lt;p&gt;在大三和弦基础上再加大三度，用根音的大写英文字母音名加上Maj7表示，如DO，MI，SOL，SI和弦表示为Cmaj7,降SI，RE，FA，LA和弦表示为Bbmaj7。&lt;br /&gt;
+大大七和弦简称大七和弦。它是在大三和弦之上再叠置一个大三度，根音与七音构成大七度音程。
+大七和弦的结构为：根音与三音是大三度音程、三音与五音是小三度音程、五音与七音是大三度音程，习惯上称之为“大三加小三加大三”。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;C大七和弦指法&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/image/cm7.jpg&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+</description>
+        <pubDate>Thu, 18 Aug 2016 09:01:49 +0800</pubDate>
+        <link>http://yourdomain.com/201602/2016/08/18/CMAj7.html</link>
+        <guid isPermaLink="true">http://yourdomain.com/201602/2016/08/18/CMAj7.html</guid>
+        
+        <category>music</category>
+        
+        
+        <category>201602</category>
+        
+      </item>
+    
+      <item>
+        <title>Welcome to Jekyll!1111111111</title>
+        <description>&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;To add new posts, simply add a file in the `_posts` directory that follows the convention 
+`YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Jekyll&lt;/code&gt;&lt;/strong&gt; also offers powerful support for code snippets:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;Tom&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints &#39;Hi, Tom&#39; to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Check out the &lt;a href=&quot;http://jekyllrb.com/docs/home&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt;.&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 16 Aug 2016 16:01:49 +0800</pubDate>
+        <link>http://yourdomain.com/201609/2016/08/16/welcome-to-jekyll-%E5%89%AF%E6%9C%AC-(3).html</link>
+        <guid isPermaLink="true">http://yourdomain.com/201609/2016/08/16/welcome-to-jekyll-%E5%89%AF%E6%9C%AC-(3).html</guid>
+        
+        <category>oracle</category>
+        
+        
+        <category>201609</category>
+        
+      </item>
+    
+      <item>
+        <title>Welcome to Jekyll!</title>
+        <description>&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+
+&lt;p&gt;To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code class=&quot;highlighter-rouge&quot;&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
+
+&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;Tom&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints &#39;Hi, Tom&#39; to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Check out the &lt;a href=&quot;http://jekyllrb.com/docs/home&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt;.&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 16 Aug 2016 16:01:49 +0800</pubDate>
+        <link>http://yourdomain.com/201607/2016/08/16/welcome-to-jekyll-%E5%89%AF%E6%9C%AC-(2).html</link>
+        <guid isPermaLink="true">http://yourdomain.com/201607/2016/08/16/welcome-to-jekyll-%E5%89%AF%E6%9C%AC-(2).html</guid>
+        
+        <category>diary</category>
+        
+        <category>music</category>
+        
+        
+        <category>201607</category>
+        
+      </item>
+    
+      <item>
+        <title>place tips</title>
+        <description>&lt;p&gt;绝对定位和相对定位，对块级元素进行布局&lt;/p&gt;
+
+&lt;p&gt;块级元素进行相对定位时：position：relative 该属性值的设置，元素没有脱离文档流，还是普通流定位模型的一部分，会对文档流中其它元素布局产生影响。&lt;br /&gt;
+设置top bottom left right的值进行定位，除去块级元素相对移动位置外，占位空间依然存在，不影响其他块级元素的位置。配合z-index属性使用可以解决垂直方向上显示覆盖的问题。
+z-index的值越高越显示在最上层。
+如设置margin来进行相对定位，会影响文档流中的其他元素位置。&lt;/p&gt;
+
+&lt;p&gt;父容器使用相对定位，子元素使用绝对定位后，这样子元素的位置不再相对于浏览器左上角，而是相对于父窗口左上角&lt;/p&gt;
+
+&lt;p&gt;相对定位和绝对定位需要配合top、right、bottom、left使用来定位具体位置，这四个属性只有在该元素使用定位后才生效，
+其它情况下无效。另外这四个属性同时只能使用相邻的两个，不能即使用上又使用下，或即使用左，又使用右。&lt;/p&gt;
+
+&lt;p&gt;采用外层div position：relative，内层div position：absolute的方法，需要注意外层的div需要设置height的具体值而不能采用设置百分比的方法，
+否则内层的div无法撑开外层div。&lt;/p&gt;
+
+&lt;p&gt;position:fixed 生成绝对定位的元素，相对于浏览器窗口进行定位。元素的位置通过 “left”, “top”, “right” 以及 “bottom” 属性进行规定。&lt;/p&gt;
+
+&lt;p&gt;position:static 默认值。没有定位，元素出现在正常的流中（忽略 top, bottom, left, right 或者 z-index 声明）。&lt;/p&gt;
+
+&lt;p&gt;position:inherit  规定应该从父元素继承 position 属性的值。&lt;/p&gt;
+</description>
+        <pubDate>Tue, 16 Aug 2016 16:01:49 +0800</pubDate>
+        <link>http://yourdomain.com/201508/2016/08/16/place.html</link>
+        <guid isPermaLink="true">http://yourdomain.com/201508/2016/08/16/place.html</guid>
+        
+        <category>front</category>
+        
+        
+        <category>201508</category>
+        
+      </item>
+    
+      <item>
+        <title>git 使用tips</title>
+        <description>&lt;p&gt;记录git的简单使用方法&lt;/p&gt;
+
+&lt;p&gt;初始化一个Git仓库，使用git init命令。&lt;/p&gt;
+
+&lt;p&gt;添加文件到Git仓库，分两步：&lt;/p&gt;
+
+&lt;p&gt;第一步，使用命令git add &lt;file&gt;，注意，可反复多次使用，添加多个文件；&lt;/file&gt;&lt;/p&gt;
+
+&lt;p&gt;第二步，使用命令git commit，完成。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git add file1.txt
+$ git add file2.txt file3.txt
+$ git commit -m &quot;add 3 files.&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Fri, 08 Jan 2016 16:01:49 +0800</pubDate>
+        <link>http://yourdomain.com/201601/2016/01/08/git.html</link>
+        <guid isPermaLink="true">http://yourdomain.com/201601/2016/01/08/git.html</guid>
+        
+        <category>coding</category>
+        
+        
+        <category>201601</category>
+        
+      </item>
+    
+  </channel>
+</rss>
