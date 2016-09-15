@@ -20,3 +20,5 @@ tags: coding
 	$ git add file1.txt
 	$ git add file2.txt file3.txt
 	$ git commit -m "add 3 files."
+	
+	$ git add -A 添加所有的改动文件
