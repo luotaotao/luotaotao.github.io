@@ -7,6 +7,8 @@ tags: coding
 ---
 记录git的简单使用方法
 
+<!--break-->
+
 初始化一个Git仓库，使用git init命令。
 
 添加文件到Git仓库，分两步：

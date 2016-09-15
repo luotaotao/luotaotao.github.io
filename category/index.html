@@ -58,7 +58,7 @@ layout: default_1
 							           <a class="post-link" target='_blank' href='{{ post.url }}'>{{ post.title }}</a>
 								       <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
 								  </h2>
-							      {{post.excerpt}}
+							      {{ post.content | split: '<!--break-->' | first }}
 							 </li>		                             
                       {% endfor %}
                   </ul>						

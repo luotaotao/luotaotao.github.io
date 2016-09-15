@@ -65,7 +65,7 @@ layout: default_1
           <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
           <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
         </h2>
-           <p>{{post.excerpt}}</p>
+           <p>{{ post.content | split: '<!--break-->' | first }}</p>
       </li>
     {% endfor %}
   </ul>

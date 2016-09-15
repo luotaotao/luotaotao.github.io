@@ -6,13 +6,15 @@
 </description>
     <link>http://yourdomain.com/</link>
     <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 13 Sep 2016 10:58:24 +0800</pubDate>
-    <lastBuildDate>Tue, 13 Sep 2016 10:58:24 +0800</lastBuildDate>
+    <pubDate>Thu, 15 Sep 2016 10:01:46 +0800</pubDate>
+    <lastBuildDate>Thu, 15 Sep 2016 10:01:46 +0800</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
         <title>oracle sql基础</title>
         <description>&lt;p&gt;相关的建表语句，删除表清空表，sequence的创建和使用&lt;/p&gt;
+
+&lt;!--break--&gt;
 
 &lt;p&gt;创建t1表&lt;/p&gt;
 
@@ -74,6 +76,8 @@ end;
         <title>PL/SQL 相关问题总结</title>
         <description>&lt;p&gt;解决pl/sql Developer的中文字符集问题，pl/sql的TNS配置&lt;/p&gt;
 
+&lt;!--break--&gt;
+
 &lt;p&gt;pl/sql Developer 使用过程中where查询条件后出现中文时，匹配不到相应的查询结果。即中文字符查询失效，解决方法如下：
 更改环境变量 NLS_LANG=SIMPLIFIED CHINESE_CHINA.ZHS16GBK&lt;/p&gt;
 
@@ -124,6 +128,8 @@ ORCL =
 浮动的框可以向左或向右移动，直到它的外边缘碰到包含框或另一个浮动框的边框为止。
 由于浮动框不在文档的普通流中，所以文档的普通流中的块框表现得就像浮动框不存在一样。&lt;/p&gt;
 
+&lt;!--break--&gt;
+
 &lt;p&gt;float 属性定义元素在哪个方向浮动。以往这个属性总应用于图像，使文本围绕在图像周围，不过在 CSS 中，任何元素都可以浮动。
 浮动元素会生成一个块级框，而不论它本身是何种元素。
 如果浮动非替换元素，则要指定一个明确的宽度；否则，它们会尽可能地窄。
@@ -154,6 +160,8 @@ ORCL =
 大大七和弦简称大七和弦。它是在大三和弦之上再叠置一个大三度，根音与七音构成大七度音程。
 大七和弦的结构为：根音与三音是大三度音程、三音与五音是小三度音程、五音与七音是大三度音程，习惯上称之为“大三加小三加大三”。&lt;/p&gt;
 
+&lt;!--break--&gt;
+
 &lt;hr /&gt;
 
 &lt;p&gt;C大七和弦指法&lt;/p&gt;
@@ -176,6 +184,8 @@ ORCL =
       <item>
         <title>Welcome to Jekyll!1111111111</title>
         <description>&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+
+&lt;!--break--&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;To add new posts, simply add a file in the `_posts` directory that follows the convention 
 `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
@@ -208,6 +218,8 @@ ORCL =
         <title>Welcome to Jekyll!</title>
         <description>&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
 
+&lt;!--break--&gt;
+
 &lt;p&gt;To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code class=&quot;highlighter-rouge&quot;&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
 
 &lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
@@ -237,6 +249,8 @@ ORCL =
       <item>
         <title>place tips</title>
         <description>&lt;p&gt;绝对定位和相对定位，对块级元素进行布局&lt;/p&gt;
+
+&lt;!--break--&gt;
 
 &lt;p&gt;块级元素进行相对定位时：position：relative 该属性值的设置，元素没有脱离文档流，还是普通流定位模型的一部分，会对文档流中其它元素布局产生影响。&lt;br /&gt;
 设置top bottom left right的值进行定位，除去块级元素相对移动位置外，占位空间依然存在，不影响其他块级元素的位置。配合z-index属性使用可以解决垂直方向上显示覆盖的问题。
@@ -271,6 +285,8 @@ z-index的值越高越显示在最上层。
       <item>
         <title>git 使用tips</title>
         <description>&lt;p&gt;记录git的简单使用方法&lt;/p&gt;
+
+&lt;!--break--&gt;
 
 &lt;p&gt;初始化一个Git仓库，使用git init命令。&lt;/p&gt;
 
