@@ -22,3 +22,6 @@ tags: coding
 	$ git commit -m "add 3 files."
 	
 	$ git add -A 添加所有的改动文件
+	
+git status 命令可以让我们时刻掌握仓库当前的状态  
+git diff 文件路径  显示文件改动前后的不同

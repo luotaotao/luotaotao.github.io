@@ -1,0 +1,22 @@
+---
+layout: post
+title:  "oracle 用户相关总结"
+date:   2016-08-16 16:01:49 +0800
+category: 201609
+tags: oracle
+---
+用户创建，用户权限，用户设置
+
+<!--break-->
+
+新建用户
+
+    create user LT_HXZG
+      default tablespace users
+      temporary tablespace temp
+      identified by zrlt007;	
+
+用户赋角色权限
+
+	GRANT CONNECT TO LT_HXZG;
+GRANT RESOURCE TO  LT_HXZG;

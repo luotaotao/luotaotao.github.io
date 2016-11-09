@@ -209,7 +209,8 @@ li {
 	 }
 .post-content p {
 	 text-indent:2em;	 
-	 margin-bottom: 30px;
+	 margin-bottom: 20px;
+     margin-top: 15px;
 }
   .post-content h2 {
     font-size: 32px; }
@@ -222,7 +223,10 @@ li {
       .post-content h3 {
         font-size: 22px; } }
   .post-content h4 {
-    font-size: 20px; }
+    font-size: 20px; 
+	margin-bottom: 20px;
+    margin-top: 15px;
+	}
     @media screen and (max-width: 800px) {
       .post-content h4 {
         font-size: 18px; } }

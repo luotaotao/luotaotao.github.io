@@ -11,6 +11,7 @@
 <!-- <link rel="stylesheet" href="/css/main.css">-->
 <!--  <link rel="canonical" href="http://yourdomain.com/">
 <link rel="alternate" type="application/rss+xml" title="Your awesome title" href="http://yourdomain.com/feed.xml">-->
+<link rel="shortcut icon" href="/image/me.ico"/>
 <link rel="canonical" href="http://yourdomain.com/201609/2016/09/12/oracle.html">
 <link rel="stylesheet" href="/css/main_try.css">
 <script type="text/javascript" src="/jquery/jquery-1.12.4.min.js" ></script>
@@ -152,9 +153,8 @@ Hiredate date);
 </code></pre>
 </div>
 
-<p>查看数据库系统时间 select sysdate from dual;</p>
-
-<p>创建序列 create sequence</p>
+<p>查看数据库系统时间 select sysdate from dual;<br />
+创建序列 create sequence</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>create sequence s4_try 
 increment by 1
@@ -184,6 +184,16 @@ execute immediate 'alter sequence  scott.'||sequence_name|| ' increment by '|| n
 execute immediate 'select scott.'||sequence_name||'.nextval from dual' into n;                                --未执行
 execute immediate 'alter sequence scott.'||sequence_name||' increment by 1';
 end;
+</code></pre>
+</div>
+
+<h4 id="oracledbca">oracle数据库打开配置管理图形界面的命令：dbca</h4>
+
+<h4 id="section">监听状态的检查</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>监听状态 lsnrctl status
+启用 lsnrctl stop
+停止 lsnrctl start
 </code></pre>
 </div>
 
