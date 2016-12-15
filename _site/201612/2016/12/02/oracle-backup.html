@@ -12,7 +12,7 @@
 <!--  <link rel="canonical" href="http://yourdomain.com/">
 <link rel="alternate" type="application/rss+xml" title="Your awesome title" href="http://yourdomain.com/feed.xml">-->
 <link rel="shortcut icon" href="/image/me.ico"/>
-<link rel="canonical" href="http://yourdomain.com/201601/2016/01/08/git.html">
+<link rel="canonical" href="http://yourdomain.com/201612/2016/12/02/oracle-backup.html">
 <link rel="stylesheet" href="/css/main_try.css">
 <script type="text/javascript" src="/jquery/jquery-1.12.4.min.js" ></script>
 <script type="text/javascript">	
@@ -134,49 +134,14 @@ function getUrlParam(name){
               <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
                  <header class="post-header">
-                 <h1 class="post-title" itemprop="name headline">git 使用tips</h1>
-                <!-- <p class="post-meta"><time datetime="2016-01-08T16:01:49+08:00" itemprop="datePublished">Jan 8, 2016</time></p>-->
+                 <h1 class="post-title" itemprop="name headline">oracle 备份与恢复</h1>
+                <!-- <p class="post-meta"><time datetime="2016-12-02T16:32:49+08:00" itemprop="datePublished">Dec 2, 2016</time></p>-->
                  </header>
 
             <div class="post-content" itemprop="articleBody">
-               <p>记录git的简单使用方法</p>
+               <p>oracle数据库的备份与恢复  RMAN备份  Data guard</p>
 
 <!--break-->
-
-<p>初始化一个Git仓库，使用git init命令。</p>
-
-<p>添加文件到Git仓库，分两步：</p>
-
-<p>第一步，使用命令git add <file>，注意，可反复多次使用，添加多个文件；</file></p>
-
-<p>第二步，使用命令git commit，完成。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>$ git add file1.txt
-$ git add file2.txt file3.txt
-$ git commit -m "add 3 files."
-
-$ git add -A 添加所有的改动文件
-</code></pre>
-</div>
-
-<p>git status 命令可以让我们时刻掌握仓库当前的状态<br />
-git diff 文件路径  显示文件改动前后的不同</p>
-
-<p>远程仓库</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>git remote 命令列出所有远程主机。
-git remote show 命令加上主机名，可以查看该主机的详细信息。
-
-添加远程仓库 git remote add
-需要加上仓库名称和仓库URL	
-$ git remote add origin git@github.com:luotaotao/luotaotao.git
-添加后，远程库的名字就是origin，这是Git默认的叫法，也可以改成别的，但是origin这个名字一看就知道是远程库。
-
-推送到远程仓库
-首次关联推送 git push -u origin master
-以后正常推送 git push origin master
-</code></pre>
-</div>
 
 
             </div>           

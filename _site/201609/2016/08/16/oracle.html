@@ -154,9 +154,19 @@ function getUrlParam(name){
 
 <p>用户赋角色权限</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>GRANT CONNECT TO LT_HXZG; GRANT RESOURCE TO  LT_HXZG;
+<div class="highlighter-rouge"><pre class="highlight"><code>GRANT CONNECT TO LT_HXZG;
+GRANT RESOURCE TO  LT_HXZG;
 </code></pre>
 </div>
+
+<p>创建用户profile</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>-- Create profile 
+create profile ODPS_PROFILE limit
+password_life_time unlimited;
+</code></pre>
+</div>
+
 
             </div>           
            </article>

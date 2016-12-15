@@ -19,4 +19,11 @@ tags: oracle
 用户赋角色权限
 
 	GRANT CONNECT TO LT_HXZG;
-GRANT RESOURCE TO  LT_HXZG;
+	GRANT RESOURCE TO  LT_HXZG;
+	
+创建用户profile
+
+	-- Create profile 
+	create profile ODPS_PROFILE limit
+	password_life_time unlimited;
+	
