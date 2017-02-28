@@ -12,3 +12,10 @@ tags: [diary,music]
 	oldest 古老的 原来的
  	
 	crucial 关键性的重要的
+	
+	duplicate  v.重复; 复制; 复印; adj.复制的; 副本的; 完全一样的; n.副本; 完全一样的东西; 复制品;
+	
+	section 部分，部件
+
+	
+	 

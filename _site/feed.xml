@@ -6,9 +6,71 @@
 </description>
     <link>http://yourdomain.com/</link>
     <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 15 Dec 2016 17:52:50 +0800</pubDate>
-    <lastBuildDate>Thu, 15 Dec 2016 17:52:50 +0800</lastBuildDate>
+    <pubDate>Mon, 27 Feb 2017 21:35:35 +0800</pubDate>
+    <lastBuildDate>Mon, 27 Feb 2017 21:35:35 +0800</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>oracle 存储过程 函数</title>
+        <description>&lt;p&gt;存储过程 函数 oracle开发相关&lt;/p&gt;
+
+&lt;!--break--&gt;
+
+&lt;p&gt;查看存储过程编译状态，是否编译成功&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;SQL&amp;gt; select status from user_objects where object_name= &#39;存储过程名称 &#39;;  
+STATUS  
+-------  
+INVALID
+创建的时候会给出提示,&quot;好像是带有编译错误的提示&quot;
+第三方工具查看存储过程,会发现有XX之类的提示
+
+sql适合处理批量数据，而程序开发更偏向流程性
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;where子句和having子句对比&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;在查询过程中聚合语句(sum,min,max,avg,count)要比having子句优先执行，简单的理解为只有有了统计结果后我才能执行筛选啊。
+where子句在查询过程中执行优先级别优先于聚合语句(sum,min,max,avg,count)，因为它是一句一句筛选的。
+HAVING子句可以让我们筛选成组后的对各组数据筛选，而WHERE子句在聚合前先筛选记录。现查询部门号不等于10的部门并且工资总和大于8000的部门编号。
+分析为通过where子句筛选出部门编号不为10的部门，然后在对部门工资进行统计，然后再使用having子句对统计结果进行筛选。
+select deptno,sum(sal) from emp where deptno!=&#39;10&#39; group by deptno having sum(sal) &amp;gt; 8000;	
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;oracle函数&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nvl
+NVL(eExpression1, eExpression2)
+如果表达式1为非null，则返回表达式一的值，为null则返回表达式2的值
+在不支持 null 值或 null 值无关紧要的情况下，可以使用 NVL( ) 来移去计算或操作中的 null 值。
+
+decode
+DECODE()函数，它将输入数值与函数中的参数列表相比较，根据输入值返回一个对应值。
+函数的参数列表是由若干数值及其对应结果值组成的若干序偶形式。当然，如果未能与任何一个实参序偶匹配成功，则函数也有默认的返回值。
+比较表达式和搜索字，如果匹配，返回结果；如果不匹配，返回default值；如果未定义default值，则返回空值
+
+常用聚合函数
+聚合语句(sum,min,max,avg,count)
+
+分析函数
+分析函数用于计算基于组的某种聚合值，它和聚合函数的不同之处是
+对于每个组返回多行，而聚合函数对于每个组只返回一行。 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Thu, 19 Jan 2017 09:51:49 +0800</pubDate>
+        <link>http://yourdomain.com/201701/2017/01/19/oracle-develop-function.html</link>
+        <guid isPermaLink="true">http://yourdomain.com/201701/2017/01/19/oracle-develop-function.html</guid>
+        
+        <category>oracle</category>
+        
+        
+        <category>201701</category>
+        
+      </item>
     
       <item>
         <title>Index 索引 相关</title>
@@ -53,8 +115,26 @@ show parameter log_archive_dest
 修改归档位置
 ALTER SYSTEM SET log_archive_dest_1=&#39;localtion=/oracle/backup_m&#39; SCOPE=spfile   重启后才生效
 ALTER SYSTEM SET log_archive_dest_1=&#39;localtion=/oracle/backup_m&#39; SCOPE=both  不用重启立即生效
+
+释放dg备库，取消归档
+alter system set log_archive_config=&#39;dg_config=(dlltcxff,dlltcxff_st1)&#39; scope=both sid=&#39;*&#39;;
+alter system set LOG_ARCHIVE_DEST_2=&#39;&#39;scope=both sid=&#39;*&#39;; 
+alter system set FAL_SERVER=dlltcxff_st1 scope=both sid=&#39;*&#39;; 
+注：实例名修改为自己单位的。
+
+统计每日产生的归档量
+  方法一：
+  select 
+  trunc(completion_time) as &quot;Date&quot;
+ ,count(*) as &quot;Count&quot;
+ ,sum(blocks * block_size) /1024 /1024 as &quot;MB&quot;
+ from v$archived_log
+ group by trunc(completion_time);
+ 方法二：
+ 切换到grid用户，asmcmd进入到asm命令行：lsdg（查看asm盘使用情况），常规操作命令du可统计文件大小
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+
 </description>
         <pubDate>Fri, 09 Dec 2016 10:54:49 +0800</pubDate>
         <link>http://yourdomain.com/201612/2016/12/09/archive-log.html</link>
@@ -69,9 +149,19 @@ ALTER SYSTEM SET log_archive_dest_1=&#39;localtion=/oracle/backup_m&#39; SCOPE=b
     
       <item>
         <title>oracle 备份与恢复</title>
-        <description>&lt;p&gt;oracle数据库的备份与恢复  RMAN备份  Data guard&lt;/p&gt;
+        <description>&lt;p&gt;oracle数据库的备份与恢复  RMAN备份以及各种备份策略  Data guard&lt;/p&gt;
 
 &lt;!--break--&gt;
+
+&lt;p&gt;数据泵expdp 导出需注意点&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;可以切换用户导，使用remap_schema=原用户名:切换后的用户名
+
+如果是rac多节点导出，开启parallel并发导出后，expdp会在各节点设置的directory导出数据文件，
+此时若其他数据库节点的directory未设置，会导致导出报错，但导出不会中断，减慢整体的导出时间，
+该种情况使用cluster=n来避免
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 </description>
         <pubDate>Fri, 02 Dec 2016 16:32:49 +0800</pubDate>
@@ -303,7 +393,7 @@ z-index的值越高越显示在最上层。
     
       <item>
         <title>oracle 用户相关总结</title>
-        <description>&lt;p&gt;用户创建，用户权限，用户设置&lt;/p&gt;
+        <description>&lt;p&gt;用户创建，用户权限，用户设置 相关视图和数据字典&lt;/p&gt;
 
 &lt;!--break--&gt;
 
@@ -340,31 +430,6 @@ password_life_time unlimited;
         
         
         <category>201609</category>
-        
-      </item>
-    
-      <item>
-        <title>日常杂记</title>
-        <description>&lt;p&gt;日常杂记 英文单词记录&lt;/p&gt;
-
-&lt;!--break--&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;oldest 古老的 原来的
- 	
-crucial 关键性的重要的
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Tue, 16 Aug 2016 16:01:49 +0800</pubDate>
-        <link>http://yourdomain.com/201607/2016/08/16/diary.html</link>
-        <guid isPermaLink="true">http://yourdomain.com/201607/2016/08/16/diary.html</guid>
-        
-        <category>diary</category>
-        
-        <category>music</category>
-        
-        
-        <category>201607</category>
         
       </item>
     

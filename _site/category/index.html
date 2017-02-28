@@ -106,24 +106,92 @@ function getUrlParam(name){
     if (r!=null) return unescape(r[2]);  
     return null;  
 }  
+
+
+//展开或收起适配小屏幕设备的分类导航栏
+$("#extent").on("click",function(){
+        $(".line_bar").slideToggle(400);
+        });
+
+//点击li标签，跳转li标签下的a链接		
+$(".ul_col1>li").on("click",function(){
+
+         var href = $(this).children("a").attr("href");
+          window.location.href = href;		 
+
+        });		
+		
+		
 	}
 );
 </script>
 </head>
  <body>
  
- <header class="site-header">
+  
+<!--
+<header class="site-header">
 
   <div class="wrapper">
-  <img class="navphoto" src="/image/head.png" width="80" height="80">
-  <h2  class="site-title"> <a href="/">Luotaotao</a></h2>
-      <div class="trigger">          
-          <a class="page-link" href="/about?id=music">About</a>
-        <!--  <a class="page-link" href="/about/">Timeline</a>  -->    
+
+    <a class="site-title" href="/">Your awesome title aaaa</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/about/">About</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
       </div>
+    </nav>
+
   </div>
 
 </header>
+-->
+
+ <header class="site-header">
+  <img class="navphoto" src="/image/head.png">
+  <h1  class="site-title"> <a href="/">Luotaotao</a></h1>
+  
+<!--  <div class="input-group">
+  <input type="text" x-webkit-speech placeholder="search" class="form-control" name="q" id="kw">
+  </div>
+-->  
+      <div class="trigger">
+          <input type="text"  placeholder="search" class="form-control" name="q" id="kw"><button type="submit" class="btn"></button>		  
+          <a class="page-link" id="about"  href="/about?id=music">About_me</a>
+		  <a class="page-link" id="extent">展开</a>
+        <!--  <a class="page-link" href="/about/">Timeline</a>  -->    
+      </div>
+</header>
+
+<div class='line_bar'><a>About_me</a></div>
+<div class='line_bar'><a>文章归档</a></div>
+<div class='line_bar'><a>文章分类</a></div>
 
 
     <div class="page-content">
@@ -155,6 +223,9 @@ function getUrlParam(name){
                      
                         <li class="201612"><a href="/category/index.html?cat=201612">201612</a><span>(3)</span>
                         </li>                   
+                     
+                        <li class="201701"><a href="/category/index.html?cat=201701">201701</a><span>(1)</span>
+                        </li>                   
                                   
             </ul>
             
@@ -168,7 +239,7 @@ function getUrlParam(name){
                 
                    <li class="cla"> <a href="/category/index.html?cat=music"> Music</a><span>(2)</span></li>                   
                 
-                   <li class="cla"> <a href="/category/index.html?cat=oracle"> Oracle</a><span>(5)</span></li>                   
+                   <li class="cla"> <a href="/category/index.html?cat=oracle"> Oracle</a><span>(6)</span></li>                   
                 
                    <li class="cla"> <a href="/category/index.html?cat=front"> Front</a><span>(2)</span></li>                   
                 
@@ -267,6 +338,16 @@ function getUrlParam(name){
 		              
                              <li>
 							      <h2>
+							           <a class="post-link" target='_blank' href='/201701/2017/01/19/oracle-develop-function.html'>oracle 存储过程 函数</a>
+								       <span class="post-meta">Jan 19, 2017</span>
+								  </h2>
+							      <p>存储过程 函数 oracle开发相关</p>
+
+
+							 </li>		                             
+                      
+                             <li>
+							      <h2>
 							           <a class="post-link" target='_blank' href='/201612/2016/12/15/oracle-index.html'>Index 索引 相关</a>
 								       <span class="post-meta">Dec 15, 2016</span>
 								  </h2>
@@ -290,7 +371,7 @@ function getUrlParam(name){
 							           <a class="post-link" target='_blank' href='/201612/2016/12/02/oracle-backup.html'>oracle 备份与恢复</a>
 								       <span class="post-meta">Dec 2, 2016</span>
 								  </h2>
-							      <p>oracle数据库的备份与恢复  RMAN备份  Data guard</p>
+							      <p>oracle数据库的备份与恢复  RMAN备份以及各种备份策略  Data guard</p>
 
 
 							 </li>		                             
@@ -310,7 +391,7 @@ function getUrlParam(name){
 							           <a class="post-link" target='_blank' href='/201609/2016/08/16/oracle.html'>oracle 用户相关总结</a>
 								       <span class="post-meta">Aug 16, 2016</span>
 								  </h2>
-							      <p>用户创建，用户权限，用户设置</p>
+							      <p>用户创建，用户权限，用户设置 相关视图和数据字典</p>
 
 
 							 </li>		                             
@@ -440,7 +521,7 @@ function getUrlParam(name){
 							           <a class="post-link" target='_blank' href='/201609/2016/08/16/oracle.html'>oracle 用户相关总结</a>
 								       <span class="post-meta">Aug 16, 2016</span>
 								  </h2>
-							      <p>用户创建，用户权限，用户设置</p>
+							      <p>用户创建，用户权限，用户设置 相关视图和数据字典</p>
 
 
 							 </li>		                             
@@ -558,7 +639,28 @@ function getUrlParam(name){
 							           <a class="post-link" target='_blank' href='/201612/2016/12/02/oracle-backup.html'>oracle 备份与恢复</a>
 								       <span class="post-meta">Dec 2, 2016</span>
 								  </h2>
-							      <p>oracle数据库的备份与恢复  RMAN备份  Data guard</p>
+							      <p>oracle数据库的备份与恢复  RMAN备份以及各种备份策略  Data guard</p>
+
+
+							 </li>		                             
+                      
+                  </ul>						
+		
+		          </div>
+				
+		       
+				
+				  <div class="201701" style="display:none;">
+				
+			       <h1 class='page2-heading'>201701</h1>
+                   <ul class='post-list'>
+		              
+                             <li>
+							      <h2>
+							           <a class="post-link" target='_blank' href='/201701/2017/01/19/oracle-develop-function.html'>oracle 存储过程 函数</a>
+								       <span class="post-meta">Jan 19, 2017</span>
+								  </h2>
+							      <p>存储过程 函数 oracle开发相关</p>
 
 
 							 </li>		                             

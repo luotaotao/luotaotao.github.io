@@ -106,28 +106,96 @@ function getUrlParam(name){
     if (r!=null) return unescape(r[2]);  
     return null;  
 }  
+
+
+//展开或收起适配小屏幕设备的分类导航栏
+$("#extent").on("click",function(){
+        $(".line_bar").slideToggle(400);
+        });
+
+//点击li标签，跳转li标签下的a链接		
+$(".ul_col1>li").on("click",function(){
+
+         var href = $(this).children("a").attr("href");
+          window.location.href = href;		 
+
+        });		
+		
+		
 	}
 );
 </script>
 </head>
  <body>
  
- <header class="site-header">
+ 
+<!--
+<header class="site-header">
 
   <div class="wrapper">
-  <img class="navphoto" src="/image/head.png" width="80" height="80">
-  <h2  class="site-title"> <a href="/">Luotaotao</a></h2>
-      <div class="trigger">          
-          <a class="page-link" href="/about?id=music">About</a>
-        <!--  <a class="page-link" href="/about/">Timeline</a>  -->    
+
+    <a class="site-title" href="/">Your awesome title aaaa</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/about/">About</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
       </div>
+    </nav>
+
   </div>
 
 </header>
+-->
+
+ <header class="site-header">
+  <img class="navphoto" src="/image/head.png">
+  <h1  class="site-title"> <a href="/">Luotaotao</a></h1>
+  
+<!--  <div class="input-group">
+  <input type="text" x-webkit-speech placeholder="search" class="form-control" name="q" id="kw">
+  </div>
+-->  
+      <div class="trigger">
+          <input type="text"  placeholder="search" class="form-control" name="q" id="kw"><button type="submit" class="btn"></button>		  
+          <a class="page-link" id="about"  href="/about?id=music">About_me</a>
+		  <a class="page-link" id="extent">展开</a>
+        <!--  <a class="page-link" href="/about/">Timeline</a>  -->    
+      </div>
+</header>
+
+<div class='line_bar'><a>About_me</a></div>
+<div class='line_bar'><a>文章归档</a></div>
+<div class='line_bar'><a>文章分类</a></div>
+
 
 
     <div class="page-content">
-      <div class="wrapper">
       
       
       <div class="add_col1" id="mcol1">
@@ -135,25 +203,28 @@ function getUrlParam(name){
           
             <ul class="ul_col1" id="ca-date">
          
-            <li class="201601"><a href="/category/index.html?cat=201601"             >201601</a><span>(1)</span>                       
+            <li class="201601"><a href="/category/index.html?cat=201601">201601</a><span>(1)</span>                       
             </li>                   
          
-            <li class="201607"><a href="/category/index.html?cat=201607"             >201607</a><span>(1)</span>                       
+            <li class="201607"><a href="/category/index.html?cat=201607">201607</a><span>(1)</span>                       
             </li>                   
          
-            <li class="201609"><a href="/category/index.html?cat=201609"             >201609</a><span>(2)</span>                       
+            <li class="201609"><a href="/category/index.html?cat=201609">201609</a><span>(2)</span>                       
             </li>                   
          
-            <li class="201508"><a href="/category/index.html?cat=201508"             >201508</a><span>(1)</span>                       
+            <li class="201508"><a href="/category/index.html?cat=201508">201508</a><span>(1)</span>                       
             </li>                   
          
-            <li class="201602"><a href="/category/index.html?cat=201602"             >201602</a><span>(1)</span>                       
+            <li class="201602"><a href="/category/index.html?cat=201602">201602</a><span>(1)</span>                       
             </li>                   
          
-            <li class="201608"><a href="/category/index.html?cat=201608"             >201608</a><span>(2)</span>                       
+            <li class="201608"><a href="/category/index.html?cat=201608">201608</a><span>(2)</span>                       
             </li>                   
          
-            <li class="201612"><a href="/category/index.html?cat=201612"             >201612</a><span>(3)</span>                       
+            <li class="201612"><a href="/category/index.html?cat=201612">201612</a><span>(3)</span>                       
+            </li>                   
+         
+            <li class="201701"><a href="/category/index.html?cat=201701">201701</a><span>(1)</span>                       
             </li>                   
              
             </ul>
@@ -169,7 +240,7 @@ function getUrlParam(name){
              
             <li class="cla"> <a href="/category/index.html?cat=music"> Music</a> <span>(2)</span></li>                 
              
-            <li class="cla"> <a href="/category/index.html?cat=oracle"> Oracle</a> <span>(5)</span></li>                 
+            <li class="cla"> <a href="/category/index.html?cat=oracle"> Oracle</a> <span>(6)</span></li>                 
              
             <li class="cla"> <a href="/category/index.html?cat=front"> Front</a> <span>(2)</span></li>                 
              
@@ -199,6 +270,16 @@ function getUrlParam(name){
     
       <li>
         <h2>
+          <a class="post-link" href="/201612/2016/12/02/oracle-backup.html">oracle 备份与恢复</a>
+          <span class="post-meta">Dec 2, 2016</span>
+        </h2>
+           <p><p>oracle数据库的备份与恢复  RMAN备份以及各种备份策略  Data guard</p>
+
+</p>
+      </li>
+    
+      <li>
+        <h2>
           <a class="post-link" href="/201609/2016/09/12/oracle.html">oracle sql基础</a>
           <span class="post-meta">Sep 12, 2016</span>
         </h2>
@@ -213,18 +294,6 @@ function getUrlParam(name){
           <span class="post-meta">Aug 29, 2016</span>
         </h2>
            <p><p>解决pl/sql Developer的中文字符集问题，pl/sql的TNS配置</p>
-
-</p>
-      </li>
-    
-      <li>
-        <h2>
-          <a class="post-link" href="/201608/2016/08/18/css-float.html">css 浮动</a>
-          <span class="post-meta">Aug 18, 2016</span>
-        </h2>
-           <p><p>解决浮动元素父标签高度塌陷的问题
-浮动的框可以向左或向右移动，直到它的外边缘碰到包含框或另一个浮动框的边框为止。
-由于浮动框不在文档的普通流中，所以文档的普通流中的块框表现得就像浮动框不存在一样。</p>
 
 </p>
       </li>
@@ -268,7 +337,7 @@ function getUrlParam(name){
 
 
 
-      </div>
+    
     </div>
 <footer class="site-footer">
    <div class="wrapper">

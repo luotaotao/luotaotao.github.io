@@ -106,6 +106,22 @@ function getUrlParam(name){
     if (r!=null) return unescape(r[2]);  
     return null;  
 }  
+
+
+//展开或收起适配小屏幕设备的分类导航栏
+$("#extent").on("click",function(){
+        $(".line_bar").slideToggle(400);
+        });
+
+//点击li标签，跳转li标签下的a链接		
+$(".ul_col1>li").on("click",function(){
+
+         var href = $(this).children("a").attr("href");
+          window.location.href = href;		 
+
+        });		
+		
+		
 	}
 );
 </script>
